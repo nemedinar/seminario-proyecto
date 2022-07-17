@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using primer_proyecto.Data;
 
@@ -11,9 +12,10 @@ using primer_proyecto.Data;
 namespace primer_proyecto.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220717171427_Departamentos")]
+    partial class Departamentos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -224,28 +226,6 @@ namespace primer_proyecto.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("primer_proyecto.Areas.Identity.Ciudad", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("DepartamentoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Nombre")
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DepartamentoId");
-
-                    b.ToTable("Ciudades");
-                });
-
             modelBuilder.Entity("primer_proyecto.Areas.Identity.Departamento", b =>
                 {
                     b.Property<int>("Id")
@@ -261,43 +241,6 @@ namespace primer_proyecto.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Departamentos");
-                });
-
-            modelBuilder.Entity("primer_proyecto.Areas.Identity.Persona", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("CiudadId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Direccion")
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
-
-                    b.Property<DateTime>("FechaNac")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Nombre")
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
-
-                    b.Property<string>("Telefono")
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CiudadId");
-
-                    b.ToTable("Personas");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -349,38 +292,6 @@ namespace primer_proyecto.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("primer_proyecto.Areas.Identity.Ciudad", b =>
-                {
-                    b.HasOne("primer_proyecto.Areas.Identity.Departamento", "Departamento")
-                        .WithMany("Ciudades")
-                        .HasForeignKey("DepartamentoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Departamento");
-                });
-
-            modelBuilder.Entity("primer_proyecto.Areas.Identity.Persona", b =>
-                {
-                    b.HasOne("primer_proyecto.Areas.Identity.Ciudad", "Ciudad")
-                        .WithMany("Personas")
-                        .HasForeignKey("CiudadId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Ciudad");
-                });
-
-            modelBuilder.Entity("primer_proyecto.Areas.Identity.Ciudad", b =>
-                {
-                    b.Navigation("Personas");
-                });
-
-            modelBuilder.Entity("primer_proyecto.Areas.Identity.Departamento", b =>
-                {
-                    b.Navigation("Ciudades");
                 });
 #pragma warning restore 612, 618
         }
